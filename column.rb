@@ -5,9 +5,9 @@ module ColumnDrop
     include GosuEnhanced
 
     def initialize
-      super(220, 220)
+      super(300, 320)
 
-      @image = Gosu::Image.load_tiles('media/Column-Drop.png', 30, 30)
+      @image = Gosu::Image.load_tiles('media/column-drop2.png', 40, 40)
     end
 
     def update
@@ -15,10 +15,23 @@ module ColumnDrop
     end
 
     def draw
+      draw_background
+
+      pos1 = Point.new(10, 25)
+
+      @image.each do |image|
+        image.draw(pos1.x, pos1.y, 2 )
+        pos1.move_by!(0, 40)
+      end
+    end
+
+    private
+
+    def draw_background
       top_left = Point.new(0, 0)
-      size     = Size.new(220, 220)
+      size     = Size.new(300, 320)
       draw_rectangle(top_left, size, 1, Gosu::Color::BLACK)
-      draw_rectangle(top_left.offset(5, 5), size.deflate(10, 10), 1, Gosu::Color.argb(0xff202020))
+      draw_rectangle(top_left.offset(10, 25), size.deflate(20, 35), 1, Gosu::Color.argb(0xff303030))
     end
   end
 end
