@@ -4,9 +4,11 @@ require 'gosu_enhanced'
 
 require 'constants'
 require 'resources'
+require 'grid'
 require 'drawer'
 
 module ColumnDrop
+  # Gem drop game
   class Game < Gosu::Window
     include GosuEnhanced
     include Constants
@@ -14,21 +16,20 @@ module ColumnDrop
     def initialize
       super(WIDTH, HEIGHT)
 
-      @image = Gosu::Image.load_tiles('media/column-drop2.png', 40, 40)
+      @drawer = Drawer.new(self)
     end
 
     def update
-
     end
 
     def draw
-      Drawer.new.draw(self)
+      @drawer.draw_all
 
-      pos1 = Point.new(BOARD_LEFT, BOARD_TOP)
+      grid_pos = Grid::Point.new(0, 6)
 
-      @image.each do |image|
-        image.draw(pos1.x, pos1.y, 2 )
-        pos1.move_by!(TILE, 0)
+      7.times do |index|
+        @drawer.draw_gem(grid_pos, rand(2..6))
+        grid_pos.move_by!(1, 0)
       end
     end
 
