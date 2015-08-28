@@ -21,10 +21,12 @@ module ColumnDrop
     end
 
     # Draw a 1-based gem. It makes more sense to ask for gem 1 to draw a gem
-    # with a '1' on it.
+    # with a '1' on it. Any number greater than 7 is drawn as a blank gem.
     # gpoint is a Grid::Point
     def draw_gem(gpoint, index, z_index = 2)
       return if index == 0
+
+      index = BLANK_FLAG if index > BLANK_FLAG
 
       point = gpoint.to_point
       @gems[index - 1].draw(point.x, point.y, z_index)
@@ -37,8 +39,8 @@ module ColumnDrop
       size     = Size.new(WIDTH, HEIGHT)
 
       @window.draw_rectangle(top_left, size, 1, MARGIN_COLOUR)
-      @window.draw_rectangle(top_left.offset(BOARD_LEFT, BOARD_TOP),
-                             Size.new(BOARD, BOARD), 1, BOARD_COLOUR)
+      @window.draw_rectangle(top_left.offset(BOARD_LEFT, BOARD_TOP - TILE),
+                             Size.new(BOARD, BOARD + TILE), 1, BOARD_COLOUR)
     end
 
     def draw_lines
