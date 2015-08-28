@@ -6,6 +6,7 @@ require 'constants'
 require 'resources'
 require 'grid'
 require 'drawer'
+require 'animation'
 
 module ColumnDrop
   # Gem drop game
@@ -17,25 +18,35 @@ module ColumnDrop
       super(WIDTH, HEIGHT)
 
       @drawer = Drawer.new(self)
+
+      reset
+    end
+
+    def reset
+      @grid = Grid.new(@drawer)
     end
 
     def update
+
     end
 
     def draw
       @drawer.draw_all
+      @grid.draw
 
-      grid_pos = Grid::Point.new(0, 6)
+      run_animations
+    end
 
-      7.times do |index|
-        @drawer.draw_gem(grid_pos, rand(2..6))
-        grid_pos.move_by!(1, 0)
-      end
+    def add_animation(speed, &block)
+      @animation = Animation.new(speed, block)
     end
 
     private
 
-    def draw_background
+    def run_animations
+      return if @animation.nil?
+
+      @animation = nil if @animate.tick == :done
     end
   end
 end

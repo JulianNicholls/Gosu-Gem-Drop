@@ -7,8 +7,14 @@ module ColumnDrop
     # Create an empty grid, with an injected drawer
 
     def initialize(drawer)
-      @grid = Array(7 * 7, 0)
+      @grid = Array.new(7 * 7, 0)
       @drawer = drawer
+    end
+
+    def draw
+      @grid.each_with_index do |cell, index|
+        @drawer.draw_gem(to_gpoint(index), cell)
+      end
     end
 
     private

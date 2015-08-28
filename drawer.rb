@@ -24,6 +24,8 @@ module ColumnDrop
     # with a '1' on it.
     # gpoint is a Grid::Point
     def draw_gem(gpoint, index, z_index = 2)
+      return if index == 0
+
       point = gpoint.to_point
       @gems[index - 1].draw(point.x, point.y, z_index)
     end
