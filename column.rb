@@ -17,25 +17,17 @@ module ColumnDrop
     def initialize
       super(WIDTH, HEIGHT)
 
-      self.caption = "Goody Goody Gem Drop"
+      self.caption = "Goody Goody Gem Drops"
 
       @drawer = Drawer.new(self)
 
       reset
-
-      # TEMPorary
-
-      7.times do |value|
-        @grid.add_gem(Grid::Point.new(value , 6), value + 1)
-        @grid.add_gem(Grid::Point.new(0, value), value + 1)
-      end
-
-      @grid.add_gem(36, 12)
-      @grid.new_waiting_gem
     end
 
     def reset
       @grid = Grid.new(@drawer)
+
+      @grid.new_waiting_gem
     end
 
     # Indicate that we need the mouse cursor
