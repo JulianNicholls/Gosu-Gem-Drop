@@ -1,5 +1,7 @@
 require 'constants'
 require 'gosu_enhanced'
+require 'gridpoint'
+require 'dropgem'
 
 module ColumnDrop
   # 7 x 7 grid for gem drop game
@@ -9,7 +11,6 @@ module ColumnDrop
     def initialize(drawer)
       @grid = Array.new(7 * 7, 0)
       @drawer = drawer
-      @waiting_gem = 0
     end
 
     def add_gem(place, value)
@@ -32,9 +33,9 @@ module ColumnDrop
         @drawer.draw_gem(to_gpoint(index), cell)
       end
 
-      return if @waiting_gem == 0
+      return unless @waiting_gem
 
-      @drawer.draw_gem(Grid::Point.new(0, -1), @waiting_gem)
+      @waiting_gem.draw
     end
 
     def process_click(point)
@@ -45,10 +46,12 @@ module ColumnDrop
     end
 
     def new_waiting_gem(value = nil)
-      return if @waiting_gem != 0
+      return if @waiting_gem
 
-      @waiting_gem = value || rand(1..7)
-      @waiting_gem += BLANK_FLAG if rand(1..8) == 1
+      setup = value || rand(1..7)
+      setup += BLANK_FLAG if rand(1..8) == 1
+
+      @waiting_gem = DropGem.new(setup, @drawer)
     end
 
     private
@@ -60,27 +63,6 @@ module ColumnDrop
 
     def to_gpoint(index)
       Grid::Point.new(index % 7, index / 7)
-    end
-
-    # Co-ordinate relative to grid
-    class Point < GosuEnhanced::Point
-      include Constants
-
-      def to_point
-        GosuEnhanced::Point.new(BOARD_LEFT, BOARD_TOP)
-          .offset(x * TILE, y * TILE)
-      end
-
-      # Can only be called if point is within the board, or in the well above
-      def from_point(point)
-        new(point.x - BOARD_LEFT, point.y - BOARD_TOP)
-      end
-
-      private
-
-      def valid?
-        x.between?(0, 6) && y.between?(-1, 6)   # -1 is above the columns
-      end
     end
   end
 end
