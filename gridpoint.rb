@@ -16,8 +16,10 @@ module ColumnDrop
 
       private
 
+      # Ensure that the co-ordinates are within the board, or in the
+      # line above
       def valid?
-        x.between?(0, 6) && y.between?(-1, 6)   # -1 is above the columns
+        x.between?(0, 6) && y.between?(-1, 6)
       end
     end
   end

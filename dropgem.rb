@@ -2,6 +2,7 @@ require 'gridpoint'
 require 'drawer'
 
 module ColumnDrop
+  # The latest gem that needs inserting
   class DropGem
     attr_accessor :column
 

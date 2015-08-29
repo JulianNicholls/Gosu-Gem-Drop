@@ -8,10 +8,10 @@ module ColumnDrop
     end
 
     def tick
-      if @counter += 1 == @speed
-        @counter = 0
-        return block.call
-      end
+      return unless @counter += 1 == @speed
+
+      @counter = 0
+      block.call
     end
   end
 end

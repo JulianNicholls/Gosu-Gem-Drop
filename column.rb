@@ -17,7 +17,7 @@ module ColumnDrop
     def initialize
       super(WIDTH, HEIGHT)
 
-      self.caption = "Goody Goody Gem Drops"
+      self.caption = 'Goody Goody Gem Drops'
 
       @drawer = Drawer.new(self)
 
@@ -36,7 +36,6 @@ module ColumnDrop
     end
 
     def update
-
     end
 
     def draw

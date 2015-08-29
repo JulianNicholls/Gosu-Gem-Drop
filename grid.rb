@@ -40,7 +40,7 @@ module ColumnDrop
 
     def process_click(point)
       return unless point.x.between?(BOARD_LEFT + 7 * TILE) &&
-        point.y.between?(BOARD_TOP - TILE, BOARD_TOP + 7 * TILE)
+                    point.y.between?(BOARD_TOP - TILE, BOARD_TOP + 7 * TILE)
 
       # Do something with click
     end
