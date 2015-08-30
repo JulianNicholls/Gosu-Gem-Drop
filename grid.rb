@@ -51,7 +51,15 @@ module ColumnDrop
       setup = value || rand(1..7)
       setup += BLANK_FLAG if rand(1..8) == 1
 
-      @waiting_gem = DropGem.new(setup, @drawer)
+      @waiting_gem = DropGem.new(self, setup, @drawer)
+    end
+
+    def down_by_one_line(gpoint)
+      # Find where 1 line down is
+      down = gpoint.offset(0, 1)
+
+      # Return false if the new position isn't empty
+      @grid[to_index(down)] == EMPTY ? down : false
     end
 
     private
