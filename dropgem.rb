@@ -6,15 +6,23 @@ module ColumnDrop
   class DropGem
     attr_accessor :column
 
-    def initialize(value, drawer)
-      @value = value
-      @row   = -1
-      @column = 3
+    def initialize(grid, value, drawer)
+      @grid   = grid
+      @value  = value
+      @gpoint = Grid::Point.new(3, -1)
       @drawer = drawer
     end
 
     def draw
-      @drawer.draw_gem(Grid::Point.new(@column, @row), @value)
+      @drawer.draw_gem(@gpoint, @value)
+    end
+
+    def drop_by_one_row
+      new_pos = Grid.down_by_one_line
+
+      return false if !new_pos
+
+      @gpoint = new_pos
     end
   end
 end
