@@ -54,6 +54,14 @@ module ColumnDrop
       @waiting_gem = DropGem.new(self, setup, @drawer)
     end
 
+    def start_drop(column)
+      @waiting_gem.column = column
+    end
+
+    def continue_drop
+      @waiting_gem.drop_by_one_row
+    end
+
     def down_by_one_line(gpoint)
       # Find where 1 line down is
       down = gpoint.offset(0, 1)

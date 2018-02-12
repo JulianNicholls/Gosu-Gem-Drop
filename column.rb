@@ -47,6 +47,8 @@ module ColumnDrop
 
     def button_down(btn_id)
       close if btn_id == Gosu::KbEscape
+
+      process_mouse if btn_id == Gosu::MsLeft && !busy?
     end
 
     def add_animation(speed, &block)
@@ -55,10 +57,31 @@ module ColumnDrop
 
     private
 
+    def process_mouse
+      column = column_from_point(Point(mouse_x, mouse_y))
+
+      if column
+        @grid.start_drop(column)
+        add_animation(20) do
+          @grid.continue_drop
+        end
+      end
+    end
+
+    def column_from_point(point)
+      gpoint = Grid::Point.from_point(point)
+
+      gpoint ? gpoint.x : false
+    end
+
     def run_animations
       return if @animation.nil?
 
       @animation = nil if @animate.tick == :done
+    end
+
+    def busy?
+      @animation
     end
   end
 end

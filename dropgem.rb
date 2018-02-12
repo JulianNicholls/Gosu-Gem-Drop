@@ -20,7 +20,7 @@ module ColumnDrop
     def drop_by_one_row
       new_pos = Grid.down_by_one_line
 
-      return false if !new_pos
+      return :done if !new_pos
 
       @gpoint = new_pos
     end

@@ -4,17 +4,16 @@ module ColumnDrop
     class Point < GosuEnhanced::Point
       include Constants
 
+      # Return a grid point or false
+      def self.from_point(point)
+        gpoint = new((point.x - BOARD_LEFT) / TILE, (point.y - BOARD_TOP) / TILE)
+
+        gpoint.valid? ? gpoint : false
+      end
+
       def to_point
-        GosuEnhanced::Point.new(BOARD_LEFT, BOARD_TOP)
-          .offset(x * TILE, y * TILE)
+        GosuEnhanced::Point(BOARD_LEFT, BOARD_TOP).offset(x * TILE, y * TILE)
       end
-
-      # Can only be called if point is within the board, or in the well above
-      def from_point(point)
-        new(point.x - BOARD_LEFT, point.y - BOARD_TOP)
-      end
-
-      private
 
       # Ensure that the co-ordinates are within the board, or in the
       # line above
